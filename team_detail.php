@@ -14,7 +14,7 @@
         <main>
             <h1 id="team-title"></h1>
             <div id="records-table-container">
-                <p class="loading">載入中...</p>
+                <p class="states">載入中...</p>
             </div>
         </main>
     </body>
