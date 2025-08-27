@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const recordsTableContainer = document.getElementById('records-table-container');
 
     if (teamId) {
-        teamTitle.textContent = `- ${teamId} -`;
+        teamTitle.textContent = `- ${teamId} - 資料`;
         fetchTeamRecords(teamId);
     } else {
         recordsTableContainer.innerHTML = '<p class="states">未指定隊伍號</p>';
@@ -48,14 +48,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `;
                 records.forEach(record => {
                     const autoScore = `
-                        Coral: ${parseInt(record.auto_l4)+parseInt(record.auto_l3)+parseInt(record.auto_l2)+parseInt(record.auto_l1)}\n
-                        Processor: ${record.auto_processor}\n
-                        Net: ${record.auto_net}
+                        Coral<br>${parseInt(record.auto_l4)+parseInt(record.auto_l3)+parseInt(record.auto_l2)+parseInt(record.auto_l1)}<br>
+                        Processor<br>${record.auto_processor}<br>
+                        Net<br>${record.auto_net}
                     `;
                     const teleopScore = `
-                        Coral: ${parseInt(record.teleop_l4)+parseInt(record.teleop_l3)+parseInt(record.teleop_l2)+parseInt(record.teleop_l1)}\n
-                        Processor: ${record.teleop_processor}\n
-                        Net: ${record.teleop_net}
+                        Coral<br>${parseInt(record.teleop_l4)+parseInt(record.teleop_l3)+parseInt(record.teleop_l2)+parseInt(record.teleop_l1)}<br>
+                        Processor<br>${record.teleop_processor}<br>
+                        Net<br>${record.teleop_net}
                     `;
                     const totalScore = calculateTotalScore(record);
                     const formattedDate = new Date(record.created_at).toLocaleString();

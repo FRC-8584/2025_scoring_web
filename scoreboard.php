@@ -12,6 +12,7 @@
             <?php include 'widgets/navbar.php';?>
         </header>
         <main>
+            <h1>記分板</h1>
             <div id="table-container">
                 <p class="states">載入中...</p>
             </div>
