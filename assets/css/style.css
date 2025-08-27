@@ -224,6 +224,15 @@ h2 {
     transform: scale(0.9);
 }
 
+.delete-btn {
+    font-size: 0.8rem;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
 /* REMARK */
 .remark-area {
     min-height: 110px;
@@ -263,7 +272,7 @@ h2 {
     position: relative;
 }
 
-.records-table tbody tr:hover {
+.records-table.clickable tbody tr:hover {
     background-color: #e8eaf6;
     color: #0f172a;
     cursor: pointer;

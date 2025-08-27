@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         let tableHTML = `
-            <table class="records-table">
+            <table class="records-table clickable">
                 <thead>
                     <tr>
                         <th id="sortable-team" data-column="team">隊伍</th>

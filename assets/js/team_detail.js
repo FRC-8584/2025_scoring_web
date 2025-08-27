@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchTeamRecords(id) {
         recordsTableContainer.innerHTML = '<p class="states">載入中...</p>';
         try {
-            const response = await fetch(`backend/get_team_records.php?team_id=${id}`);
+            const response = await fetch(`backend/get_team_records.php?team=${id}`);
             const records = await response.json();
 
             if (response.ok) {
@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <thead>
                             <tr>
                                 <th>Match</th>
-                                <th>Leave</th>
                                 <th>Auto</th>
                                 <th>Teleop</th>
                                 <th>Barge</th>
@@ -45,27 +44,40 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                    <tbody>
                 `;
                 records.forEach(record => {
-                    const autoScore = `Coral: ${record.auto_l4+record.auto_l3+record.auto_l2+record.auto_l1}\nProcessor: ${record.auto_processor}\nNet: ${record.auto_net}`;
-                    const teleopScore = `Coral: ${record.teleop_l4+record.teleop_l3+record.teleop_l2+record.teleop_l1}\nProcessor: ${record.teleop_processor}\nNet: ${record.teleop_net}`;
+                    const autoScore = `
+                        Coral: ${parseInt(record.auto_l4)+parseInt(record.auto_l3)+parseInt(record.auto_l2)+parseInt(record.auto_l1)}\n
+                        Processor: ${record.auto_processor}\n
+                        Net: ${record.auto_net}
+                    `;
+                    const teleopScore = `
+                        Coral: ${parseInt(record.teleop_l4)+parseInt(record.teleop_l3)+parseInt(record.teleop_l2)+parseInt(record.teleop_l1)}\n
+                        Processor: ${record.teleop_processor}\n
+                        Net: ${record.teleop_net}
+                    `;
                     const totalScore = calculateTotalScore(record);
                     const formattedDate = new Date(record.created_at).toLocaleString();
 
                     tableHTML += `
                         <tr>
                             <td>${record.match_id}</td>
-                            <td>${record.start_line_left}</td>
                             <td>${autoScore}</td>
                             <td>${teleopScore}</td>
                             <td>${record.teleop_barge}</td>
                             <td>${totalScore}</td>
-                            <td>${formattedDate}</td>
-                            <td>${record.remark || '無'}</td> <td><button class="delete-btn" data-id="${record.id}">刪除</button></td>
+                            <td>${record.remark || '無'}</td> 
+                            <td><button class="delete-btn" data-id="${record.id}">delete</button></td>
                         </tr>
                     `;
                 });
+
+                tableHTML += `
+                        </tbody>
+                    </table>
+                `;
+                recordsTableContainer.innerHTML = tableHTML;
             } 
             else {
                 recordsTableContainer.innerHTML = '<p class="states">載入失敗：' + records.message + '</p>';
@@ -102,10 +114,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     function calculateTotalScore(record) {
         let totalScore = 0;
         if (record.start_line_left === 'yes') { totalScore += 3; }
-        totalScore += record.auto_1 * 3 + record.auto_2 * 4 + record.auto_3 * 6 + record.auto_4 * 7;
-        totalScore += record.auto_processor * 6 + record.auto_net * 4;
-        totalScore += record.teleop_L1 * 2 + record.teleop_L2 * 3 + record.teleop_L3 * 4 + record.teleop_L4 * 5;
-        totalScore += record.teleop_processor * 6 + record.teleop_net * 4;
+        totalScore += parseInt(record.auto_l1) * 3 + parseInt(record.auto_l2) * 4 + parseInt(record.auto_l3) * 6 + parseInt(record.auto_l4) * 7;
+        totalScore += parseInt(record.auto_processor) * 6 + parseInt(record.auto_net) * 4;
+        totalScore += parseInt(record.teleop_l1) * 2 + parseInt(record.teleop_l2) * 3 + parseInt(record.teleop_l3) * 4 + parseInt(record.teleop_l4) * 5;
+        totalScore += parseInt(record.teleop_processor) * 6 + parseInt(record.teleop_net) * 4;
         const bargeScores = { 'none': 0, 'park': 2, 'shallow': 6, 'deep': 12 };
         totalScore += bargeScores[record.teleop_barge] || 0;
         return totalScore;
