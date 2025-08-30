@@ -44,8 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <tr>
                         <th id="sortable-team" data-column="team">隊伍</th>
                         <th id="sortable-match_count" data-column="match_count">比賽次數</th>
-                        <th id="sortable-total_score" data-column="total_score">總分</th>
-                        <th id="sortable-avg_total_score" data-column="avg_total_score">平均總分</th>
+                        <th id="sortable-avg_total_score" data-column="avg_total_score">場均分數</th>
                         <th id="sortable-avg_coral_score" data-column="avg_coral_score">coral 平均</th>
                         <th id="sortable-avg_algae_score" data-column="avg_algae_score">algae 平均</th>
                     </tr>
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <tr onclick="window.location='team_detail.php?team=${row.team}'">
                     <td>${row.team}</td>
                     <td>${row.match_count}</td>
-                    <td>${row.total_score}</td>
                     <td>${row.avg_total_score}</td>
                     <td>${row.avg_coral_score}</td>
                     <td>${row.avg_algae_score}</td>

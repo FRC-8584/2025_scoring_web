@@ -13,7 +13,6 @@
         </header>
         <main>
             <h1 id="team-title"></h1>
-            <div id="score-detail-container"></div>
             <div id="records-table-container">
                 <p class="states">載入中...</p>
             </div>
